@@ -8,11 +8,13 @@ import ErrorAlert from '../../components/UI/error-alert';
 const FilteredEventsPage = () => {
   const router = useRouter();
 
-  const [filteredYear, filteredMonth] = router.query.slug;
+  const slug = router.query.slug;
 
-  if (!filteredYear || !filteredMonth) {
+  if (!slug) {
     return <p className="center">Loading...</p>;
   }
+
+  const [filteredYear, filteredMonth] = slug;
 
   const numYear = parseInt(filteredYear);
   const numMonth = parseInt(filteredMonth);
