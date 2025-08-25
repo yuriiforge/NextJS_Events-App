@@ -3,6 +3,7 @@ import { getEventById, getFeaturedEvents } from '../../helpers/api-util';
 import EventSummary from '../../components/event-detail/event-summary';
 import EventLogistics from '../../components/event-detail/event-logistics';
 import EventContent from '../../components/event-detail/event-content';
+import Head from 'next/head';
 
 const EventDetailPage = (props) => {
   if (!props.selectedEvent) {
@@ -15,6 +16,10 @@ const EventDetailPage = (props) => {
 
   return (
     <>
+      <Head>
+        <title>{props.selectedEvent.title}</title>
+        <meta name="description" content={props.selectedEvent.description} />
+      </Head>
       <EventSummary title={props.selectedEvent.title} />
       <EventLogistics
         date={props.selectedEvent.date}
