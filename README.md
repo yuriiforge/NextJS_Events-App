@@ -1,13 +1,15 @@
 # 🎉 Next.js Events Project
 
 A simple events app built with **Next.js** using the **Pages Router**.  
-This project was mainly created to practice the fundamentals of Next.js, including routing, dynamic pages, and basic data handling.
+This project was mainly created to practice the fundamentals of Next.js, including routing, dynamic pages, and async data handling.
 
 ## 🚀 Features
 
 - ✅ Built with **Next.js Pages Router**
 - ✅ Static & dynamic routes for events
 - ✅ Event details page
+- ✅ Comments system with API routes
+- ✅ MongoDB + Mongoose integration for persisting comments
 - ✅ Simple navigation between pages
 - ✅ Minimal styling (CSS Modules)
 
