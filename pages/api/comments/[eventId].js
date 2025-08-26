@@ -1,10 +1,15 @@
-function handler(req, res) {
-  const eventId = req.query.eventId;
+import dbConnect from '../../../lib/mongodb';
+import Comment from '../../../models/Comment';
+
+async function handler(req, res) {
+  const { eventId } = req.query;
+  await dbConnect();
 
   if (req.method === 'POST') {
     const { email, name, text } = req.body;
 
     if (
+      !email ||
       !email.includes('@') ||
       !name ||
       name.trim() === '' ||
@@ -15,24 +20,32 @@ function handler(req, res) {
       return;
     }
 
-    console.log(email, name, text);
-    const newComment = {
-      id: new Date().toISOString(),
-      email,
-      name,
-      text,
-    };
+    try {
+      const newComment = await Comment.create({
+        eventId,
+        email,
+        name,
+        text,
+      });
 
-    res.status(201).json({ message: 'Added comment.', comment: newComment });
+      res.status(201).json({
+        message: 'Added comment.',
+        comment: newComment,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Saving comment failed.' });
+    }
   }
 
   if (req.method === 'GET') {
-    const dummyList = [
-      { id: 'c1', name: 'Yurii', text: 'A first comment' },
-      { id: 'c2', name: 'Yurii', text: 'A second comment' },
-    ];
-
-    res.status(200).json({ comments: dummyList });
+    try {
+      const comments = await Comment.find({ eventId }).sort({ createdAt: -1 });
+      res.status(200).json({ comments });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Fetching comments failed.' });
+    }
   }
 }
 
